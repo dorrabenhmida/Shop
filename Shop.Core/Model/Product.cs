@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Shop.Core.Model
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public int Id { get; set; }
+
 
         [StringLength (20)]
         public string Name { get; set; }

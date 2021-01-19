@@ -1,4 +1,5 @@
-﻿using Shop.Core.Model;
+﻿using Shop.Core.Logique;
+using Shop.Core.Model;
 using Shop.DataAccessInMemory;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,11 @@ namespace Shop.WebUserInterface.Controllers
     public class ProductCategoryController : Controller
     {
 
-        ProductCategoryRepository context;
+        IRepository<ProductCategory> context;
 
         public ProductCategoryController()
         {
-            context = new ProductCategoryRepository();
+            context = new InMemoryRepository<ProductCategory>();
         }
         // GET: ProductCategory
         public ActionResult Index()
@@ -55,7 +56,7 @@ namespace Shop.WebUserInterface.Controllers
         {
             try
             {
-                ProductCategory pprodCat = context.FinfById(id);
+                ProductCategory pprodCat = context.FindById(id);
                 if (pprodCat == null)
                 {
                     return HttpNotFound();
@@ -80,7 +81,7 @@ namespace Shop.WebUserInterface.Controllers
             try
 
             {
-                ProductCategory prodCatToEdit = context.FinfById(id);
+                ProductCategory prodCatToEdit = context.FindById(id);
                 if (prodCatToEdit == null)
                 {
                     return HttpNotFound();
@@ -113,7 +114,7 @@ namespace Shop.WebUserInterface.Controllers
         {
             try
             {
-                ProductCategory prodCat = context.FinfById(id);
+                ProductCategory prodCat = context.FindById(id);
                 if (prodCat == null)
                 {
                     return HttpNotFound();
@@ -136,7 +137,7 @@ namespace Shop.WebUserInterface.Controllers
         {
             try
             {
-                ProductCategory prodCatToDelete = context.FinfById(id);
+                ProductCategory prodCatToDelete = context.FindById(id);
                 if (prodCatToDelete == null)
                 {
                     return HttpNotFound();
