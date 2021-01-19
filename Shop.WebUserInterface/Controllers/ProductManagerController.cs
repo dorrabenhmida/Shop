@@ -1,4 +1,5 @@
-﻿using Shop.Core.Model;
+﻿using Shop.Core.Logique;
+using Shop.Core.Model;
 using Shop.Core.ViewModel;
 using Shop.DataAccessInMemory;
 using System;
@@ -11,13 +12,13 @@ namespace Shop.WebUserInterface.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRepository contextCategory; 
+        IRepository<Product> context;
+        IRepository<ProductCategory> contextCategory; 
 
         public ProductManagerController ()
         {
-            context = new ProductRepository();
-            contextCategory = new ProductCategoryRepository(); 
+            context = new InMemoryRepository<Product>();
+            contextCategory = new InMemoryRepository<ProductCategory>(); 
         }
 
 
@@ -62,7 +63,7 @@ namespace Shop.WebUserInterface.Controllers
         {
             try
             {
-                Product p = context.FinfById(id);
+                Product p = context.FindById(id);
                 if (p == null)
                 {
                     return HttpNotFound();
@@ -89,7 +90,7 @@ namespace Shop.WebUserInterface.Controllers
             try
               
             {
-                Product prodToEdit = context.FinfById(id);
+                Product prodToEdit = context.FindById(id);
                 if (prodToEdit == null)
                 {
                     return HttpNotFound(); 
@@ -126,7 +127,7 @@ namespace Shop.WebUserInterface.Controllers
         {
             try
             {
-                Product p = context.FinfById(id);
+                Product p = context.FindById(id);
                 if (p == null)
                 {
                     return HttpNotFound();
@@ -150,7 +151,7 @@ namespace Shop.WebUserInterface.Controllers
         {
             try
             {
-                Product prodToDelete = context.FinfById(id);
+                Product prodToDelete = context.FindById(id);
                 if (prodToDelete == null)
                 {
                     return HttpNotFound();
