@@ -1,6 +1,7 @@
 ﻿using Shop.Core.Logique;
 using Shop.Core.Model;
 using Shop.Core.ViewModel;
+using Shop.DataAccess.Sql;
 using Shop.DataAccessInMemory;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ namespace Shop.WebUserInterface.Controllers
 
         public ProductManagerController ()
         {
-            context = new InMemoryRepository<Product>();
-            contextCategory = new InMemoryRepository<ProductCategory>(); 
+            context = new SqlRepository<Product>(new MyContext());
+            contextCategory = new SqlRepository<ProductCategory>(new MyContext()); 
         }
 
 
