@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace Shop.WebUserInterface.Controllers
 {
@@ -43,7 +44,7 @@ namespace Shop.WebUserInterface.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Product product)
+        public ActionResult Create(Product product , HttpPostedFileBase image)
         {
 
            
@@ -53,6 +54,24 @@ namespace Shop.WebUserInterface.Controllers
             }
             else
             {
+                if (image != null)
+                {
+                    int maxId;
+                    try
+                    {
+                       // si la table est vide le bloc renvoie un id vide
+                        maxId = context.Collection().Max(p => p.Id);
+                    }
+                    catch (Exception)
+                    {
+
+                        maxId = 0;
+                    }
+                    
+                    int nextId = maxId + 1; 
+                    product.Image = product.Name + Path.GetExtension(image.FileName);
+                    image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
+                }
                 context.Insert(product);
                 context.SaveChanges();
                 return RedirectToAction("Index"); 
@@ -86,7 +105,7 @@ namespace Shop.WebUserInterface.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product product ,  int id)
+        public ActionResult Edit(Product product ,  int id , HttpPostedFileBase image)
         {
             try
               
@@ -104,6 +123,11 @@ namespace Shop.WebUserInterface.Controllers
                     }
                     else
                     {
+                        if (image != null)
+                        {
+                            product.Image = product.Id + Path.GetExtension(image.FileName);
+                            image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
+                        }
                         // context.UpDate(product); // ce n'es pas un context entity framwork
                         prodToEdit.Name = product.Name;
                         prodToEdit.Description = product.Description;
