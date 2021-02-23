@@ -19,6 +19,13 @@ namespace Shop.WebUserInterface.Controllers
         {
             context = new SqlRepository<ProductCategory>(new MyContext());
         }
+
+        public ProductCategoryController(IRepository<ProductCategory> context)
+        {
+            this.context = context;
+        }
+
+
         // GET: ProductCategory
         public ActionResult Index()
         {

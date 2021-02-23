@@ -23,6 +23,14 @@ namespace Shop.WebUserInterface.Controllers
             contextCategory = new SqlRepository<ProductCategory>(new MyContext()); 
         }
 
+        public ProductManagerController(IRepository<Product> context, IRepository<ProductCategory> contextCategory)
+        {
+            this.context = context;
+            this.contextCategory = contextCategory;
+        }
+
+
+
 
 
         // GET: ProductManager
@@ -69,8 +77,12 @@ namespace Shop.WebUserInterface.Controllers
                     }
                     
                     int nextId = maxId + 1; 
-                    product.Image = product.Name + Path.GetExtension(image.FileName);
-                    image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);
+                  /*  product.Image = product.Name + Path.GetExtension(image.FileName);
+                    image.SaveAs(Server.MapPath("~/Content/ProdImages/") + product.Image);*/
+
+                    // inserer un chemin concerne test
+
+                    image.SaveAs(product.Image); 
                 }
                 context.Insert(product);
                 context.SaveChanges();

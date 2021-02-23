@@ -21,6 +21,13 @@ namespace Shop.WebUserInterface.Controllers
             context = new SqlRepository<Product>(new MyContext());
 
         }
+
+        public HomeController(IRepository<Product> context, IRepository<ProductCategory> categorycontext)
+        {
+            this.context = context;
+            Categorycontext = categorycontext;
+        }
+
         public ActionResult Index( string Category = null)
         {
             List<Product> products;
